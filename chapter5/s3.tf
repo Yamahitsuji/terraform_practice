@@ -35,7 +35,7 @@ resource "aws_s3_bucket" "public" {
 }
 
 resource "aws_s3_bucket" "alb_log" {
-  bucket = "hitsuji-alb-log-pragmatic-rerraform"
+  bucket = "hitsuji-alb-log-pragmatic-terraform"
 
   lifecycle_rule {
     enabled = true
@@ -55,11 +55,16 @@ data "aws_iam_policy_document" "alb_log" {
   statement {
     effect    = "Allow"
     actions   = ["s3:PutObject"]
-    resources = ["arn:s3:::${aws_s3_bucket.alb_log.id}/*"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.alb_log.id}/*"]
 
     principals {
       type        = "AWS"
       identifiers = ["582318560864"]
     }
   }
+}
+
+resource "aws_s3_bucket" "force_destroy" {
+  bucket        = "hitsuji-force-destroy-pragmatic-terraform"
+  force_destroy = true
 }
