@@ -70,7 +70,7 @@ resource "aws_s3_bucket" "force_destroy" {
 }
 
 resource "aws_s3_bucket" "artifact" {
-  bucket = "artifact-pragmatic-terraform"
+  bucket = "hitsuji-artifact-pragmatic-terraform"
 
   lifecycle_rule {
     enabled = true
@@ -82,7 +82,19 @@ resource "aws_s3_bucket" "artifact" {
 }
 
 resource "aws_s3_bucket" "operation" {
-  bucket = "operation-pragmatic-terraform"
+  bucket = "hitsuji-operation-pragmatic-terraform"
+
+  lifecycle_rule {
+    enabled = true
+
+    expiration {
+      days = "180"
+    }
+  }
+}
+
+resource "aws_s3_bucket" "cloudwatch_logs" {
+  bucket = "hitsuji-logs-pragmatic-terraform"
 
   lifecycle_rule {
     enabled = true
